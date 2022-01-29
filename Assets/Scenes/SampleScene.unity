@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 369487717}
   - component: {fileID: 369487719}
   - component: {fileID: 369487718}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   _inputControllerPrefab: {fileID: 691673716415719258, guid: b87e19f203dcb414f9878f1c4214017c, type: 3}
   playerPrefab: {fileID: 3640875335707396854, guid: 54086badf1b82c943b3631384db02def, type: 3}
   playerSpawnPositions: []
-  _playerCount: 1
+  _playerCount: 2
 --- !u!4 &1877726188
 Transform:
   m_ObjectHideFlags: 0
@@ -1035,7 +1035,7 @@ GameObject:
   - component: {fileID: 2095584194}
   - component: {fileID: 2095584196}
   - component: {fileID: 2095584195}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
