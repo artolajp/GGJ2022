@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TreeEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Timeline;
 
 public class PlayerController : MonoBehaviour
 {    
@@ -27,16 +29,22 @@ public class PlayerController : MonoBehaviour
     public float Score { get; set; }
     public int PlayerNumber { get; protected set; }
 
+    private List<PlayerController> _targets;
+
+    private GameManager _gameManager;
+
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    public void Initialize(int playerNumber)
+    public void Initialize(int playerNumber, GameManager gameManager)
     {
         _inputEnable = true;
         Score = 0;
         PlayerNumber = playerNumber;
+        _targets = new List<PlayerController>();
+        _gameManager = gameManager;
     }
 
     private void Update()
@@ -83,9 +91,18 @@ public class PlayerController : MonoBehaviour
         
         if (!_actioning) {
             _actioning = true;
+            Attack();
         } 
     }
-    
+
+    private void Attack()
+    {
+        foreach (PlayerController player in _targets)
+        {
+            _gameManager.Attack(this, player);
+        }
+    }
+
     public void Jump()
     {
         _lastActioningJump = true;
@@ -124,5 +141,29 @@ public class PlayerController : MonoBehaviour
     public void EnableInputs()
     {
         _inputEnable = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var target = other.GetComponent<PlayerController>();
+        if (target)
+        {
+            _targets.Add(target);
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        var target = other.GetComponent<PlayerController>();
+        if (target)
+        {
+            _targets.Remove(target);
+        }
+    }
+
+    public void Push(Vector3 origin, float pushForce)
+    {
+        Vector3 normalizedDirection = (transform.position-origin).normalized;
+        _rigidbody2D.AddForce(normalizedDirection * pushForce);
     }
 }

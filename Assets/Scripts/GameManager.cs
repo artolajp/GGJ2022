@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < _playerCount; i++)
         {
             PlayerController playerController = Instantiate(playerPrefab);
-            playerController.Initialize(i);
+            playerController.Initialize(i, this);
             _playerControllers.Add(playerController);
         }
 
@@ -55,5 +55,16 @@ public class GameManager : MonoBehaviour
     public void ScorePlayer(float score, PlayerController player)
     {
         player.Score += score;
+    }
+
+    public void Attack(PlayerController player, PlayerController target)
+    {
+        if (_treasureController.IsTreasure && _treasureController.AttachedPlayer == target)
+        {
+            _treasureController.AttachPlayer(player);
+        }else if (_treasureController.IsCurse && _treasureController.AttachedPlayer == player)
+        {
+            _treasureController.AttachPlayer(target);
+        }
     }
 }
