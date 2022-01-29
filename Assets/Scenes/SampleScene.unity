@@ -1008,6 +1008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputControllerPrefab: {fileID: 691673716415719258, guid: b87e19f203dcb414f9878f1c4214017c, type: 3}
   playerPrefab: {fileID: 3640875335707396854, guid: 54086badf1b82c943b3631384db02def, type: 3}
+  _treasureControllerPrefab: {fileID: 8488303151741277913, guid: b0d81614aedbf764f82f4a26ee77fd98, type: 3}
   playerSpawnPositions: []
   _playerCount: 2
 --- !u!4 &1877726188

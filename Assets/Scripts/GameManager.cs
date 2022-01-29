@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private PlayerController playerPrefab;
     private List<PlayerController> _playerControllers;
+
+    [SerializeField] private TreasureController _treasureControllerPrefab;
+    private TreasureController _treasureController;
     
     [SerializeField] private List<Transform> playerSpawnPositions;
     [SerializeField] private int _playerCount = 4 ;
@@ -24,11 +27,16 @@ public class GameManager : MonoBehaviour
         _playerControllers = new List<PlayerController>(_playerCount);
         for (int i = 0; i < _playerCount; i++)
         {
-            _playerControllers.Add(Instantiate(playerPrefab));
+            PlayerController playerController = Instantiate(playerPrefab);
+            playerController.Initialize(i);
+            _playerControllers.Add(playerController);
         }
 
         _inputController = Instantiate(_inputControllerPrefab);
         _inputController.Initialize(this);
+
+        _treasureController = Instantiate(_treasureControllerPrefab);
+        _treasureController.Initialize(this);
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {
@@ -42,5 +50,10 @@ public class GameManager : MonoBehaviour
     
     public void JumpPlayer(int playerNumber) {
         _playerControllers[playerNumber].Jump();
+    }
+
+    public void ScorePlayer(float score, PlayerController player)
+    {
+        player.Score += score;
     }
 }

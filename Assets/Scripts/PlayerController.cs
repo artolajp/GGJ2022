@@ -24,15 +24,19 @@ public class PlayerController : MonoBehaviour
     private bool _onLeftWall;
     private bool _onRightWall;
     private bool _inputEnable;
+    public float Score { get; set; }
+    public int PlayerNumber { get; protected set; }
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void Initialize(int playerNumber)
     {
         _inputEnable = true;
+        Score = 0;
+        PlayerNumber = playerNumber;
     }
 
     private void Update()
