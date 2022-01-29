@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour
         
         if (!_actioning) {
             _actioning = true;
-            Debug.Log("Action Player");
         } 
     }
     
@@ -93,13 +92,11 @@ public class PlayerController : MonoBehaviour
             if (_onFloor)
             {
                 _actioningJump = true;
-                Debug.Log("Jump Player");
                 _rigidbody2D.AddForce(new Vector2(0, _jumpForce));
             }
             else if (_onRightWall)
             {
                 _actioningJump = true;
-                Debug.Log("Jump to left Player");
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(-1, 1));
                 DisableInputs();
@@ -107,7 +104,6 @@ public class PlayerController : MonoBehaviour
             else if (_onLeftWall)
             {
                 _actioningJump = true;
-                Debug.Log("Jump to right Player");
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(1, 1));
                 DisableInputs();
