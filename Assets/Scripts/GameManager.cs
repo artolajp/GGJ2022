@@ -39,4 +39,8 @@ public class GameManager : MonoBehaviour
     public void ActionPlayer(int playerNumber) {
         _playerControllers[playerNumber].Action();
     }
+    
+    public void JumpPlayer(int playerNumber) {
+        _playerControllers[playerNumber].Jump();
+    }
 }

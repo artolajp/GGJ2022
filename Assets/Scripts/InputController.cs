@@ -19,13 +19,18 @@ public class InputController : MonoBehaviour
         if (_gameManager.IsPlaying) {
             // requires you to set up axes "Joy0X" - "Joy3X" and "Joy0Y" - "Joy3Y" in the Input Manger
             for (int i = 0; i < _gameManager.PlayerCount; i++) {
-                if (Mathf.Abs(Input.GetAxis("Joy" + (i + 1) + "X")) > deadZone ||
-                    Mathf.Abs(Input.GetAxis("Joy" + (i + 1) + "Y")) > deadZone) {
-                    _gameManager.MovePlayer(i, new Vector2(Input.GetAxis("Joy" + (i + 1) + "X"), -Input.GetAxis("Joy" + (i + 1) + "Y")));
+                string joystickName = "Joy" + (i + 1);
+                if (Mathf.Abs(Input.GetAxis(joystickName + "X")) > deadZone ||
+                    Mathf.Abs(Input.GetAxis(joystickName + "Y")) > deadZone) {
+                    _gameManager.MovePlayer(i, new Vector2(Input.GetAxis(joystickName + "X"), -Input.GetAxis(joystickName + "Y")));
                 }
 
-                if (Input.GetAxis("Joy" + (i + 1) + "Fire") > 0) {
+                if (Input.GetAxis(joystickName + "Fire") > 0) {
                     _gameManager.ActionPlayer(i);
+                }
+                
+                if (Input.GetAxis(joystickName + "Jump") > 0) {
+                    _gameManager.JumpPlayer(i);
                 }
             }
 
