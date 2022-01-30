@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f33b861708f41d4cbdd5b79581b8788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 6
-  _jumpForce: 420
+  _speed: 7
+  _jumpForce: 450
   _jumpWallForce: {x: 250, y: 350}
   _animator: {fileID: 5914034005012875743}
   _mainSprite: {fileID: 3801660385290819149}
