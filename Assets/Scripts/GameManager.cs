@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         _playerControllers = new List<PlayerController>(_playerCount);
         for (int i = 0; i < _playerCount; i++)
         {
-            PlayerController playerController = Instantiate(playerPrefabs[i]);
+            PlayerController playerController = Instantiate(playerPrefabs[i],playerSpawnPositions[i].position,transform.rotation,transform);
             playerController.Initialize(i, this);
             _playerControllers.Add(playerController);
         }

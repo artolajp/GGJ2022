@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
         var casts = Physics2D.RaycastAll(origin,  direction, 0.6f);
         foreach (var hit2D in casts)
         {
-            if(PlayerNumber== 0 && hit2D.collider.tag == tag) Debug.Log("Hit with floor");
             isRaycast |= hit2D.collider.tag == tag;
         }
 
