@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 4.0f;
     [SerializeField] private float _jumpForce = 350;
     [SerializeField] private Vector2 _jumpWallForce = new Vector2(250,250);
+    [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _mainSprite;
     
     private bool _actioning;
     private bool _lastActioning;
@@ -55,6 +57,12 @@ public class PlayerController : MonoBehaviour
         _onRightWall = rightWallCast.point.y > 0;
         var leftWallCast = Physics2D.Raycast(transform.position,  Vector3.left, 0.52f,LayerMask.GetMask("Floor"));
         _onLeftWall = leftWallCast.point.y > 0;
+
+        if (_onFloor)
+        {
+            _animator.SetBool("isJumping",false);
+        }
+
     }
 
     private void FixedUpdate() {
@@ -63,11 +71,13 @@ public class PlayerController : MonoBehaviour
             float breakSpeed = _onFloor ? 0.5f : 0.95f;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x * breakSpeed, _rigidbody2D.velocity.y);
         } else if(_inputEnable){
-            _moving = false;
+            _moving = false;            
+            _animator.SetBool("isWalking",false);
         }
         
         if (!_lastActioning && _actioning) {
-            _actioning = false;
+            _actioning = false;            
+            _animator.SetBool("isAttaking",false);
         }
         _lastActioning = false;
         
@@ -80,8 +90,12 @@ public class PlayerController : MonoBehaviour
     public void Move(Vector2 direction) {
         if (!_inputEnable) return;
         
+        _animator.SetBool("isWalking",true);
         _moving = true;
-        _rigidbody2D.velocity = Vector2.right * direction.normalized.x * _speed + Vector2.up * _rigidbody2D.velocity.y;
+        Vector2 velocity = new Vector2(direction.normalized.x * _speed, _rigidbody2D.velocity.y);
+        _rigidbody2D.velocity = velocity;
+
+        _mainSprite.gameObject.transform.localScale = velocity.x > 0? Vector3.one: new Vector3(-1,1,1);
     }
 
     public void Action() {
@@ -101,6 +115,8 @@ public class PlayerController : MonoBehaviour
         {
             _gameManager.Attack(this, player);
         }
+        _animator.SetBool("isAttaking",true);
+
     }
 
     public void Jump()
@@ -114,6 +130,8 @@ public class PlayerController : MonoBehaviour
             {
                 _actioningJump = true;
                 _rigidbody2D.AddForce(new Vector2(0, _jumpForce));
+                _animator.SetBool("isJumping",true);
+
             }
             else if (_onRightWall)
             {
@@ -121,6 +139,8 @@ public class PlayerController : MonoBehaviour
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(-1, 1));
                 DisableInputs();
+                _animator.SetBool("isJumping",true);
+
             }
             else if (_onLeftWall)
             {
@@ -128,6 +148,7 @@ public class PlayerController : MonoBehaviour
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(1, 1));
                 DisableInputs();
+                _animator.SetBool("isJumping",true);
             }
         }
     }

@@ -101,7 +101,6 @@ public class TreasureController : MonoBehaviour
     private void RepositionTreasure()
     {
         Vector3 newPosition = _currentPlayer.transform.position;
-        newPosition.z = -1;
         transform.position = newPosition;
     }
 }

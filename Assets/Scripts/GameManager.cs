@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputController _inputControllerPrefab;
     private InputController _inputController;
     
-    [SerializeField] private PlayerController playerPrefab;
+    [SerializeField] private List<PlayerController> playerPrefabs;
     private List<PlayerController> _playerControllers;
 
     [SerializeField] private TreasureController _treasureControllerPrefab;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         _playerControllers = new List<PlayerController>(_playerCount);
         for (int i = 0; i < _playerCount; i++)
         {
-            PlayerController playerController = Instantiate(playerPrefab);
+            PlayerController playerController = Instantiate(playerPrefabs[i]);
             playerController.Initialize(i, this);
             _playerControllers.Add(playerController);
         }
