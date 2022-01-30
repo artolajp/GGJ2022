@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour {
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour {
 
     public static int PlayersSelected { get; set; } = -1;
 
+    private bool gameFinished = false;
+
     private void Awake()
     {
         if (PlayersSelected > 0) {
@@ -72,9 +75,11 @@ public class GameManager : MonoBehaviour {
     {
         _uiController.Refresh(_playerControllers, _treasureController, _currentMatchTime);
         _currentMatchTime -= Time.deltaTime;
-        if (_currentMatchTime <= 0)
+        if (!gameFinished && _currentMatchTime <= 0)
         {
             EndGame();
+        } else if(gameFinished && Input.anyKeyDown) {
+            StartCoroutine(ReturnMenu(0));
         }
     }
 
@@ -96,6 +101,11 @@ public class GameManager : MonoBehaviour {
         
         musicSource.clip = endMusic;
         musicSource.Play();
+
+        gameFinished = true;
+
+        Time.timeScale = 0;
+        StartCoroutine(ReturnMenu(10));
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {
@@ -127,5 +137,11 @@ public class GameManager : MonoBehaviour {
         {
             _treasureController.AttachPlayer(target);
         }
+    }
+
+    public IEnumerator ReturnMenu(float delay) {
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Home");
     }
 }
