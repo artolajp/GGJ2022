@@ -31,8 +31,16 @@ public class GameManager : MonoBehaviour
     private PlayerController _winPlayer;
     public bool IsPlaying => _winPlayer==null;
 
+    public static int PlayersSelected { get; set; } = -1;
+
     private void Awake()
     {
+        if (PlayersSelected > 0) {
+            _playerCount = PlayersSelected;
+        } else {
+            PlayersSelected = _playerCount;
+        }
+
         _playerControllers = new List<PlayerController>(_playerCount);
         for (int i = 0; i < _playerCount; i++)
         {
