@@ -164,6 +164,10 @@ public class PlayerController : MonoBehaviour
     public void Push(Vector3 origin, float pushForce)
     {
         Vector3 normalizedDirection = (transform.position-origin).normalized;
+        normalizedDirection.y = Mathf.Abs(normalizedDirection.y);
+        _rigidbody2D.velocity = Vector2.zero;
         _rigidbody2D.AddForce(normalizedDirection * pushForce);
+
+        DisableInputs();
     }
 }

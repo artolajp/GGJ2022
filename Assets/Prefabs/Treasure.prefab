@@ -97,12 +97,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treasureScoreForSecond: 10
-  curseScoreForSecond: 10
+  curseScoreForSecond: 5
   curseTime: 5
   treasureTime: 5
   treasureColor: {r: 0, g: 1, b: 0, a: 1}
   curseColor: {r: 1, g: 0, b: 1, a: 1}
-  _pushForce: 4000
+  _pushForce: 1200
 --- !u!58 &2037422613836779170
 CircleCollider2D:
   m_ObjectHideFlags: 0

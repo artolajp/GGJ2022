@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Transform> playerSpawnPositions;
     [SerializeField] private int _playerCount = 4 ;
 
+    [SerializeField] private UIController _uiController;
+    
     public int PlayerCount => _playerCount;
 
     private PlayerController _winPlayer;
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
         _treasureController.Initialize(this);
     }
 
+    private void Update()
+    {
+        _uiController.Refresh(_playerControllers);
+    }
+
     public void MovePlayer(int playerNumber, Vector2 direction) {
         _playerControllers[playerNumber].Move(direction);
 
@@ -54,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     public void ScorePlayer(float score, PlayerController player)
     {
-        player.Score += score;
+        player.Score = Mathf.Max(player.Score + score,0) ;
     }
 
     public void Attack(PlayerController player, PlayerController target)

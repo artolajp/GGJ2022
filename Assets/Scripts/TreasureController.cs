@@ -49,17 +49,17 @@ public class TreasureController : MonoBehaviour
     {
         if (!_currentPlayer) return;
         
-        float score = _isTreasure ? treasureScoreForSecond : curseScoreForSecond;
+        float score = _isTreasure ? treasureScoreForSecond : -curseScoreForSecond;
         _gameManager.ScorePlayer( score * Time.deltaTime, _currentPlayer);
     }
 
     public void AttachPlayer(PlayerController playerController)
     {
         _currentPlayer = playerController;
-
+        RepositionTreasure();
         foreach (PlayerController target in _targets)
         {
-            if (target == _currentPlayer) return;
+            if (target == _currentPlayer) continue;
 
             target.Push(transform.position, _pushForce);
         }
@@ -94,10 +94,14 @@ public class TreasureController : MonoBehaviour
     private void Update()
     {
         if (!_currentPlayer) return;
-        
+
+        RepositionTreasure();
+    }
+
+    private void RepositionTreasure()
+    {
         Vector3 newPosition = _currentPlayer.transform.position;
         newPosition.z = -1;
         transform.position = newPosition;
     }
-    
 }
