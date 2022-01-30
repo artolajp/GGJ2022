@@ -16,9 +16,12 @@ public class TreasureController : MonoBehaviour
     [SerializeField] private int curseScoreForSecond = 10;
     [SerializeField] private float curseTime = 10;
     [SerializeField] private float treasureTime = 10;
-    
+
+    [SerializeField] private SpriteRenderer _treasureSpriteRenderer;
     [SerializeField] private Color treasureColor = Color.green;
+    [SerializeField] private Sprite treasureSprite;
     [SerializeField] private Color curseColor = Color.magenta;
+    [SerializeField] private Sprite curseSprite;
     private List<PlayerController> _targets;
     [SerializeField] private float _pushForce = 400.0f;
     public PlayerController AttachedPlayer => _currentPlayer;
@@ -42,6 +45,7 @@ public class TreasureController : MonoBehaviour
     {
         _isTreasure = !_isTreasure;
         _renderer.color = _isTreasure ? treasureColor : curseColor;
+        _treasureSpriteRenderer.sprite = _isTreasure ? treasureSprite : curseSprite;
         Invoke(nameof(InvertTreasure),_isTreasure ? treasureTime : curseTime);
     }
 

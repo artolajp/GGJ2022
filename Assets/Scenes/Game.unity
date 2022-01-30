@@ -239,22 +239,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 323204776387415555, guid: 91bb6c1e4964a1b42a3a7ab83f70f9e0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1206475358586356796, guid: 91bb6c1e4964a1b42a3a7ab83f70f9e0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1604180222896901045, guid: 91bb6c1e4964a1b42a3a7ab83f70f9e0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 3262709410964118857, guid: 91bb6c1e4964a1b42a3a7ab83f70f9e0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.14
-      objectReference: {fileID: 0}
     - target: {fileID: 4313650238995120118, guid: 91bb6c1e4964a1b42a3a7ab83f70f9e0, type: 3}
       propertyPath: m_Name
       value: Grid

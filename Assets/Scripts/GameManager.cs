@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _matchDuration = 99;
     private float _currentMatchTime;
 
-    [SerializeField] private Tilemap _Map;
+    [SerializeField] private GameObject winPanel;
     
     public int PlayerCount => _playerCount;
 
