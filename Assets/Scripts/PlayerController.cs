@@ -51,18 +51,29 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        var floorCast = Physics2D.Raycast(transform.position,  Vector3.down, 0.52f,LayerMask.GetMask("Floor"));
-        _onFloor = floorCast.point.y > 0;
-        var rightWallCast = Physics2D.Raycast(transform.position,  Vector3.right, 0.52f,LayerMask.GetMask("Floor"));
-        _onRightWall = rightWallCast.point.y > 0;
-        var leftWallCast = Physics2D.Raycast(transform.position,  Vector3.left, 0.52f,LayerMask.GetMask("Floor"));
-        _onLeftWall = leftWallCast.point.y > 0;
-
+        _onFloor = IsRaycastWith(transform.position + Vector3.right * 0.3f, Vector3.down + Vector3.right * 0.3f, "Floor");
+        _onFloor |= IsRaycastWith(transform.position + Vector3.left * 0.3f, Vector3.down - Vector3.left * 0.3f, "Floor");
+        _onRightWall = IsRaycastWith(transform.position, Vector3.right, "Floor");
+        _onRightWall |= IsRaycastWith(transform.position + Vector3.down * 0.3f, Vector3.right + Vector3.down * 0.3f, "Floor");
+        _onLeftWall = IsRaycastWith(transform.position, Vector3.left, "Floor");
+        _onLeftWall |= IsRaycastWith(transform.position + Vector3.down * 0.3f, Vector3.left + Vector3.down * 0.3f, "Floor");
         if (_onFloor)
         {
             _animator.SetBool("isJumping",false);
         }
+    }
 
+    private bool IsRaycastWith(Vector2 origin, Vector2 direction, string tag)
+    {
+        bool isRaycast = false;
+        var casts = Physics2D.RaycastAll(origin,  direction, 0.6f);
+        foreach (var hit2D in casts)
+        {
+            if(PlayerNumber== 0 && hit2D.collider.tag == tag) Debug.Log("Hit with floor");
+            isRaycast |= hit2D.collider.tag == tag;
+        }
+
+        return isRaycast;
     }
 
     private void FixedUpdate() {

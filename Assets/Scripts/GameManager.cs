@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _playerCount = 4 ;
 
     [SerializeField] private UIController _uiController;
+
+    [SerializeField] private float _targetScore = 200;
+    [SerializeField] private float _matchDuration = 99;
+    private float _currentMatchTime;
+
+    [SerializeField] private Tilemap _Map;
     
     public int PlayerCount => _playerCount;
 
@@ -39,16 +46,36 @@ public class GameManager : MonoBehaviour
 
         _treasureController = Instantiate(_treasureControllerPrefab);
         _treasureController.Initialize(this);
+
+        _currentMatchTime = _matchDuration;
     }
 
     private void Update()
     {
-        _uiController.Refresh(_playerControllers);
+        _uiController.Refresh(_playerControllers, _treasureController);
+        _currentMatchTime -= Time.deltaTime;
+        if (_currentMatchTime <= 0)
+        {
+            EndGame();
+        }
+    }
+
+    private void EndGame()
+    {
+        PlayerController winner = _playerControllers[0];
+        for (int i = 1; i < _playerControllers.Count; i++)
+        {
+            if (_playerControllers[i].Score > winner.Score)
+            {
+                winner = _playerControllers[i];
+            }
+        }
+
+        _winPlayer = winner;
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {
         _playerControllers[playerNumber].Move(direction);
-
     }
 
     public void ActionPlayer(int playerNumber) {
@@ -61,7 +88,10 @@ public class GameManager : MonoBehaviour
 
     public void ScorePlayer(float score, PlayerController player)
     {
-        player.Score = Mathf.Max(player.Score + score,0) ;
+        if (IsPlaying)
+        {
+            player.Score = Mathf.Max(player.Score + score,0) ;
+        }
     }
 
     public void Attack(PlayerController player, PlayerController target)
