@@ -19,7 +19,7 @@ public class HomeController : Singleton<HomeController> {
     [SerializeField]
     private Button playBtn;
 
-    private static bool howToPlayShown = false;
+    private static bool howToPlayShown = true;
 
     private int ChairCount => chairs.FindAll(chair => chair.IsOn).Count;
 
