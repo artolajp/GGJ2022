@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
         }
 
         _winPlayer = winner;
+
+        winPanel.SetActive(true);
+        _uiController.ShowWinner(_winPlayer);
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {
