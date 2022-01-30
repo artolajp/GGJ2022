@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     [SerializeField] private InputController _inputControllerPrefab;
     private InputController _inputController;
-    
+
     [SerializeField] private List<PlayerController> playerPrefabs;
     private List<PlayerController> _playerControllers;
 
     [SerializeField] private TreasureController _treasureControllerPrefab;
     private TreasureController _treasureController;
-    
+
     [SerializeField] private List<Transform> playerSpawnPositions;
-    [SerializeField] private int _playerCount = 4 ;
+    [SerializeField] private int _playerCount = 4;
 
     [SerializeField] private UIController _uiController;
 
@@ -27,6 +26,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winPanel;
     [SerializeField] private Animator maskAnimator;
     public Animator MaskAnimator => maskAnimator;
+
+    [SerializeField] private AudioSource musicSource;
+
+    [SerializeField] private AudioClip gameMusic;
+
+    [SerializeField] private AudioClip endMusic;
 
     public int PlayerCount => _playerCount;
 
@@ -58,6 +63,9 @@ public class GameManager : MonoBehaviour
         _treasureController.Initialize(this);
 
         _currentMatchTime = _matchDuration;
+
+        musicSource.clip = gameMusic;
+        musicSource.Play();
     }
 
     private void Update()
@@ -84,7 +92,10 @@ public class GameManager : MonoBehaviour
         _winPlayer = winner;
 
         winPanel.SetActive(true);
-        _uiController.ShowWinner(_winPlayer);
+        _uiController.ShowWinner(_winPlayer); 
+        
+        musicSource.clip = endMusic;
+        musicSource.Play();
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {
