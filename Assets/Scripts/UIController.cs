@@ -8,9 +8,10 @@ using UnityEngine.Serialization;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private List<TMP_Text> playerScoreTexts;
-    [SerializeField] [NotNull] private TMP_Text _winerText;
+    [SerializeField] private TMP_Text _winerText;
+    [SerializeField] private TMP_Text _timerText;
     
-    public void Refresh(List<PlayerController> players, TreasureController treasure)
+    public void Refresh(List<PlayerController> players, TreasureController treasure, float time)
     {
         for (int i = 0; i<players.Count;i++)
         {
@@ -21,6 +22,8 @@ public class UIController : MonoBehaviour
         {
             playerScoreTexts[i].text = "";
         }
+
+        _timerText.text = time.ToString("00.0");
     }
 
     public void ShowWinner(PlayerController winPlayer)

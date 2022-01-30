@@ -42,6 +42,10 @@ public class InputController : MonoBehaviour
                 if (Input.GetAxis("Fire1") > 0) {
                     _gameManager.ActionPlayer(0);
                 }
+                
+                if (Input.GetAxis("Fire1") > 0) {
+                    _gameManager.JumpPlayer(0);
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] private UIController _uiController;
 
-    [SerializeField] private float _targetScore = 200;
+    
     [SerializeField] private float _matchDuration = 99;
     private float _currentMatchTime;
 
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        _uiController.Refresh(_playerControllers, _treasureController);
+        _uiController.Refresh(_playerControllers, _treasureController, _currentMatchTime);
         _currentMatchTime -= Time.deltaTime;
         if (_currentMatchTime <= 0)
         {
