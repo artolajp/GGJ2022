@@ -25,7 +25,9 @@ public class GameManager : MonoBehaviour
     private float _currentMatchTime;
 
     [SerializeField] private GameObject winPanel;
-    
+    [SerializeField] private Animator maskAnimator;
+    public Animator MaskAnimator => maskAnimator;
+
     public int PlayerCount => _playerCount;
 
     private PlayerController _winPlayer;
@@ -80,6 +82,9 @@ public class GameManager : MonoBehaviour
         }
 
         _winPlayer = winner;
+
+        winPanel.SetActive(true);
+        _uiController.ShowWinner(_winPlayer);
     }
 
     public void MovePlayer(int playerNumber, Vector2 direction) {

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private List<TMP_Text> playerScoreTexts;
+    [SerializeField] [NotNull] private TMP_Text _winerText;
     
     public void Refresh(List<PlayerController> players, TreasureController treasure)
     {
@@ -18,5 +21,10 @@ public class UIController : MonoBehaviour
         {
             playerScoreTexts[i].text = "";
         }
+    }
+
+    public void ShowWinner(PlayerController winPlayer)
+    {
+        _winerText.text = $"Player {winPlayer.PlayerNumber + 1}!";
     }
 }

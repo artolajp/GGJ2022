@@ -24,7 +24,7 @@ public class TreasureController : MonoBehaviour
     [SerializeField] private Sprite curseSprite;
     private List<PlayerController> _targets;
     [SerializeField] private float _pushForce = 400.0f;
-    [SerializeField] private Animator maskAnimator;
+    public Animator MaskAnimator => _gameManager.MaskAnimator;
     public PlayerController AttachedPlayer => _currentPlayer;
     public bool IsTreasure => _isTreasure;
     public bool IsCurse => !_isTreasure;
@@ -44,7 +44,7 @@ public class TreasureController : MonoBehaviour
     }
 
     public void InvertTreasureMask() {
-        maskAnimator.SetTrigger("Activate");
+        MaskAnimator.SetTrigger("Activate");
     }
 
     public void InvertTreasure()
@@ -52,6 +52,7 @@ public class TreasureController : MonoBehaviour
         _isTreasure = !_isTreasure;
         _renderer.color = _isTreasure ? treasureColor : curseColor;
         _treasureSpriteRenderer.sprite = _isTreasure ? treasureSprite : curseSprite;
+        Invoke(nameof(InvertTreasureMask), (_isTreasure ? treasureTime : curseTime) - 5);
         Invoke(nameof(InvertTreasure),_isTreasure ? treasureTime : curseTime);
     }
 
