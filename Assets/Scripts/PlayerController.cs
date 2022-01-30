@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _jumpWallForce = new Vector2(250,250);
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _mainSprite;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpAudio;
+    [SerializeField] private AudioClip hitAudio;
     
     private bool _actioning;
     private bool _lastActioning;
@@ -126,41 +130,46 @@ public class PlayerController : MonoBehaviour
             _gameManager.Attack(this, player);
         }
         _animator.SetBool("isAttaking",true);
-
+        PlayHitAudio();
     }
 
-    public void Jump()
-    {
+    public void Jump() {
         _lastActioningJump = true;
         if (!_inputEnable) return;
-        
-        if (!_actioningJump)
-        {
-            if (_onFloor)
-            {
+
+        if (!_actioningJump) {
+            if (_onFloor) {
                 _actioningJump = true;
                 _rigidbody2D.AddForce(new Vector2(0, _jumpForce));
-                _animator.SetBool("isJumping",true);
+                _animator.SetBool("isJumping", true);
+                PlayJumpAudio();
 
-            }
-            else if (_onRightWall)
-            {
+            } else if (_onRightWall) {
                 _actioningJump = true;
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(-1, 1));
                 DisableInputs();
-                _animator.SetBool("isJumping",true);
+                _animator.SetBool("isJumping", true);
+                PlayJumpAudio();
 
-            }
-            else if (_onLeftWall)
-            {
+            } else if (_onLeftWall) {
                 _actioningJump = true;
                 _rigidbody2D.velocity = Vector2.zero;
                 _rigidbody2D.AddForce(_jumpWallForce * new Vector2(1, 1));
                 DisableInputs();
-                _animator.SetBool("isJumping",true);
+                _animator.SetBool("isJumping", true);
+                PlayJumpAudio();
             }
         }
+
+    }
+
+    private void PlayJumpAudio() {
+        audioSource.PlayOneShot(jumpAudio);
+    }
+
+    public void PlayHitAudio() {
+        audioSource.PlayOneShot(hitAudio);
     }
 
     public void DisableInputs()

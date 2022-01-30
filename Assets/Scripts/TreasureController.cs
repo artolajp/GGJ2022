@@ -29,6 +29,8 @@ public class TreasureController : MonoBehaviour
     public bool IsTreasure => _isTreasure;
     public bool IsCurse => !_isTreasure;
 
+    [SerializeField] private AudioSource audioSource;
+
     public void Initialize(GameManager gameManager, bool isTreasure = true)
     {
         _gameManager = gameManager;
@@ -49,6 +51,7 @@ public class TreasureController : MonoBehaviour
 
     public void InvertTreasure()
     {
+        audioSource.Play();
         _isTreasure = !_isTreasure;
         _renderer.color = _isTreasure ? treasureColor : curseColor;
         _treasureSpriteRenderer.sprite = _isTreasure ? treasureSprite : curseSprite;
